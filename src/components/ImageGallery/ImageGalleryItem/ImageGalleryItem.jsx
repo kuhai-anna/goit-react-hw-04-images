@@ -8,14 +8,16 @@ export const ImageGalleryItem = ({
   onClick,
   onSelectImage,
 }) => {
-  const handleImageClick = () => {
-    onClick();
-    onSelectImage(largeImageURL);
-  };
-
   return (
     <GalleryItem className="gallery-item">
-      <GalleryImage src={webformatURL} alt={tags} onClick={handleImageClick} />
+      <GalleryImage
+        src={webformatURL}
+        alt={tags}
+        onClick={() => {
+          onClick();
+          onSelectImage(largeImageURL);
+        }}
+      />
     </GalleryItem>
   );
 };
