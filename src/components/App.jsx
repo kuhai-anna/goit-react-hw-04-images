@@ -52,13 +52,12 @@ export const App = () => {
           onClick={toggleModal}
           onSelectImage={handleSelectedImg}
           viewLoadMoreBtn={viewLoadMoreBtn}
-        >
-          {showModal && (
-            <Modal onClose={toggleModal}>
-              <ModalImage src={selectedImg} alt="" />
-            </Modal>
-          )}
-        </ImageGallery>
+        />
+        {showModal && (
+          <Modal onClose={toggleModal}>
+            <ModalImage src={selectedImg} alt="" />
+          </Modal>
+        )}
 
         {totalHits > 12 && notLastPage && <Button onClick={loadMoreBtnClick} />}
       </Section>
