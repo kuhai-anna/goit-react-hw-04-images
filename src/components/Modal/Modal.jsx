@@ -6,16 +6,20 @@ import { Overlay, ModalContent } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ onClose, children }) => {
-  useEffect(() => {
-    window.addEventListener('keydown', hendleKeyDown);
-  });
-
   const hendleKeyDown = e => {
     if (e.code === 'Escape') {
       onClose();
-      window.removeEventListener('keydown', hendleKeyDown);
+      // window.removeEventListener('keydown', hendleKeyDown);
     }
-  };
+  }; //Функція 'hendleKeyDown' змушує залежності useEffect Hook (у рядку 23) змінюватися при кожному рендері. Перемістіть його всередину зворотного виклику useEffect. Крім того, оберніть визначення 'hendleKeyDown' у його власний хук useCallback().
+
+  useEffect(() => {
+    window.addEventListener('keydown', hendleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', hendleKeyDown);
+    };
+  }, [hendleKeyDown]);
 
   const hendleBackdropClick = e => {
     if (e.currentTarget === e.target) {
