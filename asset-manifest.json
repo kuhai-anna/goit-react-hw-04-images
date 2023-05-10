@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/goit-react-hw-04-images/static/js/main.c9799498.js",
+    "main.js": "/goit-react-hw-04-images/static/js/main.342d716c.js",
     "static/media/sad-danbo-optim.jpeg": "/goit-react-hw-04-images/static/media/sad-danbo-optim.d2948c859d65a8182b38.jpeg",
     "static/media/blue-cube-optim.jpeg": "/goit-react-hw-04-images/static/media/blue-cube-optim.f5087a363cfe9707ae4b.jpeg",
     "index.html": "/goit-react-hw-04-images/index.html",
-    "main.c9799498.js.map": "/goit-react-hw-04-images/static/js/main.c9799498.js.map"
+    "main.342d716c.js.map": "/goit-react-hw-04-images/static/js/main.342d716c.js.map"
   },
   "entrypoints": [
-    "static/js/main.c9799498.js"
+    "static/js/main.342d716c.js"
   ]
 }
