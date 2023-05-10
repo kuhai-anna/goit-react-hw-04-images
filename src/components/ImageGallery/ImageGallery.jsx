@@ -21,42 +21,44 @@ export const ImageGallery = ({
   const [status, setStatus] = useState(Status.IDLE);
 
   useEffect(() => {
-    if (searchQuery === '') {
+    if (!searchQuery) {
+      // перший рендер - це порожній рядок, не робимо http-запит
       return;
-    } else {
-      async function getImages() {
-        setStatus(Status.PENDING);
-        try {
-          const { hits, totalHits } = await fetchImagesWithQuery(
-            searchQuery,
-            page
-          );
-
-          page === 1
-            ? setImages(hits)
-            : setImages(prevState => [...prevState, ...hits]);
-          setStatus(Status.RESOLVED);
-
-          // React Hook useEffect має відсутню залежність: 'viewLoadMoreBtn'. Або включіть його, або видаліть масив залежностей. Якщо 'viewLoadMoreBtn' змінюється занадто часто, знайдіть батьківський компонент, який його визначає, і загорніть це визначення в useCallback.
-          viewLoadMoreBtn(totalHits); //прередача загальної кількості знайдених картинок
-
-          if (hits.length === 0) {
-            throw new Error(
-              'Sorry, there are no images matching your search query. Please try again.'
-            );
-          }
-        } catch (error) {
-          setError(error);
-          setStatus(Status.REJECTED);
-        }
-      }
-
-      getImages();
     }
-  }, [searchQuery, page, viewLoadMoreBtn]);
+
+    async function getImages() {
+      setStatus(Status.PENDING);
+      try {
+        const { hits, totalHits } = await fetchImagesWithQuery(
+          searchQuery,
+          page
+        );
+
+        page === 1
+          ? setImages(hits)
+          : setImages(prevState => [...prevState, ...hits]);
+
+        setStatus(Status.RESOLVED);
+
+        // React Hook useEffect має відсутню залежність: 'viewLoadMoreBtn'. Або включіть його, або видаліть масив залежностей. Якщо 'viewLoadMoreBtn' змінюється занадто часто, знайдіть батьківський компонент, який його визначає, і загорніть це визначення в useCallback.
+        viewLoadMoreBtn(totalHits, Status.RESOLVED); //прередача загальної кількості знайдених картинок
+
+        if (hits.length === 0) {
+          throw new Error(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
+      } catch (error) {
+        setError(error);
+        setStatus(Status.REJECTED);
+      }
+    }
+
+    getImages();
+  }, [searchQuery, page]); //eslint пропонує додати залежність viewLoadMoreBtn, яка провокує виконання повторного http запиту під час будь-яких дій (перший рендер, відкриття модалки, натискання на кнопку "завантажити ще")
 
   // рендер компонентів в залежності від статусу
-  if (status === 'idle') {
+  if (status === Status.IDLE) {
     return (
       <ImageGalleryIdleView
         message={
@@ -66,11 +68,11 @@ export const ImageGallery = ({
     );
   }
 
-  if (status === 'pending') {
+  if (status === Status.PENDING) {
     return <Loader />;
   }
 
-  if (status === 'rejected') {
+  if (status === Status.REJECTED) {
     return (
       <ImageGalleryErrorView
         message={`Whoops, something went wrong. ${error.message}`}
@@ -78,7 +80,7 @@ export const ImageGallery = ({
     );
   }
 
-  if (status === 'resolved') {
+  if (status === Status.RESOLVED) {
     return (
       <Gallery className="gallery">
         {images.map(({ id, webformatURL, largeImageURL, tags }) => (
