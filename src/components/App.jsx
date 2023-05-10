@@ -42,75 +42,29 @@ export const App = () => {
 
   const notLastPage = page < Math.ceil(totalHits / 12);
 
-  if (status !== 'resolved') {
-    return (
-      <>
-        <Searchbar onSubmit={handleFormSubmit} />
-        <Section>
-          <ImageGallery
-            searchQuery={searchQuery}
-            page={page}
-            onClick={toggleModal}
-            onSelectImage={setSelectedImg}
-            viewLoadMoreBtn={viewLoadMoreBtn}
-          />
-          {showModal && (
-            <Modal onClose={toggleModal}>
-              <ModalImage src={selectedImg} alt="" />
-            </Modal>
-          )}
-        </Section>
-      </>
-    );
-  }
+  return (
+    <>
+      <Searchbar onSubmit={handleFormSubmit} />
+      <Section>
+        <ImageGallery
+          searchQuery={searchQuery}
+          page={page}
+          onClick={toggleModal}
+          onSelectImage={setSelectedImg}
+          viewLoadMoreBtn={viewLoadMoreBtn}
+        />
+        {showModal && (
+          <Modal onClose={toggleModal}>
+            <ModalImage src={selectedImg} alt="" />
+          </Modal>
+        )}
 
-  if (status === 'resolved') {
-    return (
-      <>
-        <Searchbar onSubmit={handleFormSubmit} />
-        <Section>
-          <ImageGallery
-            searchQuery={searchQuery}
-            page={page}
-            onClick={toggleModal}
-            onSelectImage={setSelectedImg}
-            viewLoadMoreBtn={viewLoadMoreBtn}
-          />
-          {showModal && (
-            <Modal onClose={toggleModal}>
-              <ModalImage src={selectedImg} alt="" />
-            </Modal>
-          )}
-
-          {totalHits > 12 && notLastPage && (
-            <Button onClick={loadMoreBtnClick} />
-          )}
-        </Section>
-      </>
-    );
-  }
-
-  // return (
-  //   <>
-  //     <Searchbar onSubmit={handleFormSubmit} />
-  //     <Section>
-  //       <ImageGallery
-  //         searchQuery={searchQuery}
-  //         page={page}
-  //         onClick={toggleModal}
-  //         onSelectImage={setSelectedImg}
-  //         viewLoadMoreBtn={viewLoadMoreBtn}
-  //       />
-  //       {showModal && (
-  //         <Modal onClose={toggleModal}>
-  //           <ModalImage src={selectedImg} alt="" />
-  //         </Modal>
-  //       )}
-
-  //       {totalHits > 12 && notLastPage && <Button onClick={loadMoreBtnClick} />}
-  //     </Section>
-  //   </>
-  // );
+        {totalHits > 12 && notLastPage && status === Status.RESOLVED && (
+          <Button onClick={loadMoreBtnClick} />
+        )}
+      </Section>
+    </>
+  );
 };
 
 // export class App extends Component {
