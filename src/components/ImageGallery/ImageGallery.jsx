@@ -37,10 +37,8 @@ export const ImageGallery = ({
         page === 1
           ? setImages(hits)
           : setImages(prevState => [...prevState, ...hits]);
-
         setStatus(Status.RESOLVED);
 
-        // React Hook useEffect має відсутню залежність: 'viewLoadMoreBtn'. Або включіть його, або видаліть масив залежностей. Якщо 'viewLoadMoreBtn' змінюється занадто часто, знайдіть батьківський компонент, який його визначає, і загорніть це визначення в useCallback.
         viewLoadMoreBtn(totalHits, Status.RESOLVED); //прередача загальної кількості знайдених картинок
 
         if (hits.length === 0) {
@@ -55,7 +53,7 @@ export const ImageGallery = ({
     }
 
     getImages();
-  }, [searchQuery, page]); //eslint пропонує додати залежність viewLoadMoreBtn, яка провокує виконання повторного http запиту під час будь-яких дій (перший рендер, відкриття модалки, натискання на кнопку "завантажити ще")
+  }, [searchQuery, page, viewLoadMoreBtn]);
 
   // рендер компонентів в залежності від статусу
   if (status === Status.IDLE) {
