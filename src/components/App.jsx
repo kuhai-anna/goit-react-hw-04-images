@@ -1,5 +1,4 @@
-// import { Component } from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Section } from './Section/Section';
@@ -24,10 +23,13 @@ export const App = () => {
   };
 
   //прередача загальної кількості знайдених картинок при отриманні результату запиту
-  const viewLoadMoreBtn = (totalHits, status) => {
-    setTotalHits(totalHits);
-    setStatus(status);
-  };
+  const viewLoadMoreBtn = useCallback(
+    (totalHits, status) => {
+      setTotalHits(totalHits);
+      setStatus(status);
+    },
+    [setTotalHits, setStatus]
+  );
 
   // відкриття та закриття модалки
   const toggleModal = () => {
