@@ -1,21 +1,22 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { Overlay, ModalContent } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ onClose, children }) => {
-  const hendleKeyDown = e => {
-    if (e.code === 'Escape') {
-      onClose();
-      // window.removeEventListener('keydown', hendleKeyDown);
-    }
-  }; //Функція 'hendleKeyDown' змушує залежності useEffect Hook (у рядку 23) змінюватися при кожному рендері. Перемістіть його всередину зворотного виклику useEffect. Крім того, оберніть визначення 'hendleKeyDown' у його власний хук useCallback().
+  const hendleKeyDown = useCallback(
+    e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', hendleKeyDown);
-
     return () => {
       window.removeEventListener('keydown', hendleKeyDown);
     };
