@@ -14,9 +14,9 @@ export const ModalContent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 400px;
-  max-width: 700px;
-  width: 100%;
+  min-height: 200px;
+  width: 95%;
+  max-width: 720px;
   border-radius: ${props => props.theme.spacing(1)};
   /* padding: ${props => props.theme.spacing(3)}; */
   /* background-color: #ffffff; */
