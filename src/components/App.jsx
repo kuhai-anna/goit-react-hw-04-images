@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+// import { useLockBodyScroll } from 'react-use';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Section } from './Section/Section';
@@ -31,9 +32,16 @@ export const App = () => {
     [setTotalHits, setStatus]
   );
 
+  // useLockBodyScroll(showModal);
+
   // відкриття та закриття модалки
   const toggleModal = () => {
     setShowModal(showModal => !showModal);
+    showModal
+      ? (document.body.style.overflow = 'auto') &&
+        (document.body.style.height = 'initial')
+      : (document.body.style.overflow = 'hidden') &&
+        (document.body.style.height = '100vh');
   };
 
   // збільшення номеру сторінки при кліку на кнопку
@@ -47,24 +55,26 @@ export const App = () => {
   return (
     <>
       <Searchbar onSubmit={handleFormSubmit} />
-      <Section>
-        <ImageGallery
-          searchQuery={searchQuery}
-          page={page}
-          onClick={toggleModal}
-          onSelectImage={setSelectedImg}
-          viewLoadMoreBtn={viewLoadMoreBtn}
-        />
-        {showModal && (
-          <Modal onClose={toggleModal}>
-            <ModalImage src={selectedImg} alt="" />
-          </Modal>
-        )}
+      <main>
+        <Section>
+          <ImageGallery
+            searchQuery={searchQuery}
+            page={page}
+            onClick={toggleModal}
+            onSelectImage={setSelectedImg}
+            viewLoadMoreBtn={viewLoadMoreBtn}
+          />
+          {showModal && (
+            <Modal onClose={toggleModal}>
+              <ModalImage src={selectedImg} alt="" />
+            </Modal>
+          )}
 
-        {totalHits > 12 && notLastPage && status === Status.RESOLVED && (
-          <Button onClick={loadMoreBtnClick} />
-        )}
-      </Section>
+          {totalHits > 12 && notLastPage && status === Status.RESOLVED && (
+            <Button onClick={loadMoreBtnClick} />
+          )}
+        </Section>
+      </main>
     </>
   );
 };
