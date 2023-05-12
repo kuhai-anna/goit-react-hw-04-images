@@ -5,7 +5,7 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1100;
+  z-index: 10;
   min-height: 64px;
   padding-right: ${props => props.theme.spacing(6)};
   padding-left: ${props => props.theme.spacing(6)};
