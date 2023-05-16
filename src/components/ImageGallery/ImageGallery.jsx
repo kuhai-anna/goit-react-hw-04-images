@@ -80,7 +80,7 @@ export const ImageGallery = ({
 
   if (status === Status.RESOLVED) {
     return (
-      <Gallery className="gallery">
+      <Gallery>
         {images.map(({ id, webformatURL, largeImageURL, tags }) => (
           <ImageGalleryItem
             key={id}

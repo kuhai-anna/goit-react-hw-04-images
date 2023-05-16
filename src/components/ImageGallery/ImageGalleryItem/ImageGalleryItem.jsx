@@ -9,7 +9,7 @@ export const ImageGalleryItem = ({
   onSelectImage,
 }) => {
   return (
-    <GalleryItem className="gallery-item">
+    <GalleryItem>
       <GalleryImage
         src={webformatURL}
         alt={tags}
