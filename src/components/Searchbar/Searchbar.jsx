@@ -3,8 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import { Formik } from 'formik';
 import { IconButton } from 'components/IconButton/IconButton';
-import { Header } from './Searchbar.styled';
-import { Form, Field } from './Searchbar.styled';
+import { Header, Form, Field } from './Searchbar.styled';
 
 const initialValues = {
   searchQuery: '',
